@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quản lý sinh viên - AdminLTE 4</title>
+
+    <!-- Bootstrap 5.3 -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+            rel="stylesheet">
+
+    <!-- AdminLTE 4 -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/admin-lte@4.9.1/dist/css/adminlte.min.css">
+
+    <style>
+
+        .student-table td {
+            vertical-align: middle;
+        }
+
+        .student-id {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+    </style>
+
+</head>
+
+
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+
+<div class="app-wrapper">
+
+
+    <!-- ===================================================== -->
+    <!-- HEADER -->
+    <!-- ===================================================== -->
+
+    <nav class="app-header navbar navbar-expand bg-body">
+
+        <div class="container-fluid">
+
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+
+                    <a
+                            class="nav-link"
+                            data-lte-toggle="sidebar"
+                            href="#"
+                            role="button">
+
+                        <i class="bi bi-list"></i>
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+
+                    <span class="nav-link">
+
+                        <i class="bi bi-person-circle"></i>
+
+                        Admin
+
+                    </span>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ===================================================== -->
+    <!-- SIDEBAR -->
+    <!-- ===================================================== -->
+
+    <aside
+            class="app-sidebar bg-dark shadow"
+            data-bs-theme="dark">
+
+        <div class="sidebar-brand">
+
+            <a
+                    href="/students"
+                    class="brand-link">
+
+                <span class="brand-text fw-light">
+
+                    QUẢN LÝ SINH VIÊN
+
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-wrapper">
+
+            <nav class="mt-2">
+
+                <ul
+                        class="nav sidebar-menu flex-column"
+                        data-lte-toggle="treeview"
+                        role="menu">
+
+
+                    <li class="nav-item">
+
+                        <a
+                                href="/students"
+                                class="nav-link active">
+
+                            <i class="nav-icon bi bi-speedometer2"></i>
+
+                            <p>
+                                Dashboard
+                            </p>
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-header">
+
+                        QUẢN LÝ
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                                href="/students"
+                                class="nav-link">
+
+                            <i class="nav-icon bi bi-people"></i>
+
+                            <p>
+                                Sinh viên
+                            </p>
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                                href="#"
+                                class="nav-link"
+                                onclick="showAddStudentModal(); return false;">
+
+                            <i class="nav-icon bi bi-person-plus"></i>
+
+                            <p>
+                                Thêm sinh viên
+                            </p>
+
+                        </a>
+
+                    </li>
+
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ===================================================== -->
+    <!-- MAIN -->
+    <!-- ===================================================== -->
+
+    <main class="app-main">
+
+
+        <!-- CONTENT HEADER -->
+
+        <div class="app-content-header">
+
+            <div class="container-fluid">
+
+                <div class="row">
+
+                    <div class="col-sm-6">
+
+                        <h3 class="mb-0">
+                            Quản lý sinh viên
+                        </h3>
+
+                    </div>
+
+
+                    <div class="col-sm-6">
+
+                        <ol class="breadcrumb float-sm-end">
+
+                            <li class="breadcrumb-item">
+
+                                <a href="/students">
+                                    Trang chủ
+                                </a>
+
+                            </li>
+
+                            <li class="breadcrumb-item active">
+
+                                Sinh viên
+
+                            </li>
+
+                        </ol>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CONTENT -->
+
+        <div class="app-content">
+
+            <div class="container-fluid">
+
+
+                <!-- ================================================= -->
+                <!-- THỐNG KÊ -->
+                <!-- ================================================= -->
+
+                <div class="row">
+
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="small-box text-bg-primary">
+
+                            <div class="inner">
+
+                                <h3 id="totalStudents">
+                                    0
+                                </h3>
+
+                                <p>
+                                    Tổng sinh viên
+                                </p>
+
+                            </div>
+
+                            <div class="small-box-icon">
+
+                                <i class="bi bi-people"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="small-box text-bg-success">
+
+                            <div class="inner">
+
+                                <h3 id="totalClasses">
+                                    0
+                                </h3>
+
+                                <p>
+                                    Số lớp
+                                </p>
+
+                            </div>
+
+                            <div class="small-box-icon">
+
+                                <i class="bi bi-building"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="small-box text-bg-warning">
+
+                            <div class="inner">
+
+                                <h3 id="totalEmails">
+                                    0
+                                </h3>
+
+                                <p>
+                                    Sinh viên có Email
+                                </p>
+
+                            </div>
+
+                            <div class="small-box-icon">
+
+                                <i class="bi bi-envelope"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- DANH SÁCH -->
+                <!-- ================================================= -->
+
+                <div class="card card-primary card-outline">
+
+                    <div class="card-header">
+
+                        <h3 class="card-title">
+
+                            <i class="bi bi-table"></i>
+
+                            Danh sách sinh viên
+
+                        </h3>
+
+
+                        <div class="card-tools">
+
+                            <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    onclick="showAddStudentModal()">
+
+                                <i class="bi bi-plus-lg"></i>
+
+                                Thêm sinh viên
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+
+                        <!-- SEARCH -->
+
+                        <div class="row mb-3">
+
+                            <div class="col-md-8">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+
+                                        <i class="bi bi-search"></i>
+
+                                    </span>
+
+
+                                    <input
+                                            type="text"
+                                            id="keyword"
+                                            class="form-control"
+                                            placeholder="Tìm mã SV, họ tên, email, số điện thoại...">
+
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <button
+                                        class="btn btn-primary"
+                                        onclick="searchStudents()">
+
+                                    <i class="bi bi-search"></i>
+
+                                    Tìm kiếm
+
+                                </button>
+
+
+                                <button
+                                        class="btn btn-secondary"
+                                        onclick="loadStudents()">
+
+                                    <i class="bi bi-arrow-clockwise"></i>
+
+                                    Tất cả
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TABLE -->
+
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered table-hover student-table">
+
+                                <thead class="table-primary">
+
+                                <tr>
+
+                                    <th>
+                                        #
+                                    </th>
+
+                                    <th>
+                                        Mã SV
+                                    </th>
+
+                                    <th>
+                                        Họ tên
+                                    </th>
+
+                                    <th>
+                                        Email
+                                    </th>
+
+                                    <th>
+                                        Điện thoại
+                                    </th>
+
+                                    <th>
+                                        Lớp
+                                    </th>
+
+                                    <th style="width: 150px;">
+                                        Thao tác
+                                    </th>
+
+                                </tr>
+
+                                </thead>
+
+
+                                <tbody id="studentList">
+
+                                <tr>
+
+                                    <td
+                                            colspan="7"
+                                            class="text-center">
+
+                                        <div class="spinner-border text-primary">
+
+                                        </div>
+
+                                        <div class="mt-2">
+
+                                            Đang tải dữ liệu...
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-footer">
+
+                        <span id="resultInfo">
+                            Đang tải...
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ===================================================== -->
+    <!-- FOOTER -->
+    <!-- ===================================================== -->
+
+    <footer class="app-footer">
+
+        <div class="float-end d-none d-sm-inline">
+
+            Spring Boot + SQL Server
+
+        </div>
+
+        <strong>
+
+            Quản lý sinh viên
+
+        </strong>
+
+    </footer>
+
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- MODAL THÊM / SỬA SINH VIÊN -->
+<!-- ========================================================= -->
+
+<div
+        class="modal fade"
+        id="studentModal"
+        tabindex="-1"
+        aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+
+                <h5
+                        class="modal-title"
+                        id="modalTitle">
+
+                    Thêm sinh viên
+
+                </h5>
+
+
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <form id="studentForm">
+
+
+                    <input
+                            type="hidden"
+                            id="studentId">
+
+
+                    <div class="row">
+
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+
+                                Mã sinh viên
+
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="studentCode"
+                                    class="form-control"
+                                    required>
+
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+
+                                Họ tên
+
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="fullName"
+                                    class="form-control"
+                                    required>
+
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+
+                                Email
+
+                            </label>
+
+                            <input
+                                    type="email"
+                                    id="email"
+                                    class="form-control"
+                                    required>
+
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+
+                                Điện thoại
+
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="phone"
+                                    class="form-control">
+
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+
+                                Lớp
+
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="className"
+                                    class="form-control">
+
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                    Đóng
+
+                </button>
+
+
+                <button
+                        type="button"
+                        class="btn btn-primary"
+                        onclick="saveStudent()">
+
+                    <i class="bi bi-save"></i>
+
+                    Lưu
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================================================= -->
+
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<script
+        src="https://cdn.jsdelivr.net/npm/admin-lte@4.9.1/dist/js/adminlte.min.js">
+</script>
+
+
+<script>
+
+    const API_URL = "/api/students";
+
+    let students = [];
+
+
+    // ========================================================
+    // LOAD DANH SÁCH
+    // ========================================================
+
+    function loadStudents() {
+
+        fetch(API_URL)
+
+            .then(response => {
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "HTTP " + response.status
+                    );
+
+                }
+
+                return response.json();
+
+            })
+
+            .then(data => {
+
+                students = data;
+
+                displayStudents(data);
+
+                updateStatistics(data);
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+                document.getElementById(
+                    "studentList"
+                ).innerHTML = `
+
+                    <tr>
+
+                        <td
+                                colspan="7"
+                                class="text-center text-danger">
+
+                            <i class="bi bi-exclamation-triangle"></i>
+
+                            Không thể tải dữ liệu
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+                document.getElementById(
+                    "resultInfo"
+                ).textContent =
+                    "Có lỗi khi kết nối API";
+
+            });
+
+    }
+
+
+    // ========================================================
+    // HIỂN THỊ DANH SÁCH
+    // ========================================================
+
+    function displayStudents(data) {
+
+        const tbody =
+            document.getElementById("studentList");
+
+
+        if (!data || data.length === 0) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td
+                            colspan="7"
+                            class="text-center">
+
+                        Không tìm thấy sinh viên
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            document.getElementById(
+                "resultInfo"
+            ).textContent =
+                "Không có dữ liệu";
+
+            return;
+
+        }
+
+
+        let html = "";
+
+
+        data.forEach((student, index) => {
+
+            html += `
+
+                <tr>
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+
+                    <td>
+
+                        <strong>
+                            ${escapeHtml(student.studentCode)}
+                        </strong>
+
+                        <div class="student-id">
+                            ${escapeHtml(student.id)}
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHtml(student.fullName)}
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHtml(student.email)}
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHtml(student.phone || "")}
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="badge text-bg-info">
+
+                            ${escapeHtml(student.className || "")}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                                class="btn btn-sm btn-warning"
+                                onclick="editStudent('${student.id}')">
+
+                            <i class="bi bi-pencil"></i>
+
+                        </button>
+
+
+                        <button
+                                class="btn btn-sm btn-danger"
+                                onclick="deleteStudent('${student.id}')">
+
+                            <i class="bi bi-trash"></i>
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+
+        tbody.innerHTML = html;
+
+
+        document.getElementById(
+            "resultInfo"
+        ).textContent =
+            "Tổng số: " + data.length + " sinh viên";
+
+    }
+
+
+    // ========================================================
+    // TÌM KIẾM
+    // ========================================================
+
+    function searchStudents() {
+
+        const keyword =
+            document.getElementById(
+                "keyword"
+            ).value.trim();
+
+
+        if (keyword === "") {
+
+            loadStudents();
+
+            return;
+
+        }
+
+
+        fetch(
+            API_URL
+            + "?keyword="
+            + encodeURIComponent(keyword)
+        )
+
+            .then(response => {
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "HTTP " + response.status
+                    );
+
+                }
+
+                return response.json();
+
+            })
+
+            .then(data => {
+
+                displayStudents(data);
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+                alert(
+                    "Không thể tìm kiếm sinh viên!"
+                );
+
+            });
+
+    }
+
+
+    // ========================================================
+    // MỞ FORM THÊM
+    // ========================================================
+
+    function showAddStudentModal() {
+
+        document.getElementById(
+            "studentForm"
+        ).reset();
+
+
+        document.getElementById(
+            "studentId"
+        ).value = "";
+
+
+        document.getElementById(
+            "modalTitle"
+        ).textContent =
+            "Thêm sinh viên";
+
+
+        const modal = new bootstrap.Modal(
+            document.getElementById(
+                "studentModal"
+            )
+        );
+
+
+        modal.show();
+
+    }
+
+
+    // ========================================================
+    // SỬA SINH VIÊN
+    // ========================================================
+
+    function editStudent(id) {
+
+        fetch(
+            API_URL + "/" + id
+        )
+
+            .then(response => {
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Không tìm thấy sinh viên"
+                    );
+
+                }
+
+                return response.json();
+
+            })
+
+            .then(student => {
+
+                document.getElementById(
+                    "studentId"
+                ).value = student.id;
+
+
+                document.getElementById(
+                    "studentCode"
+                ).value =
+                    student.studentCode || "";
+
+
+                document.getElementById(
+                    "fullName"
+                ).value =
+                    student.fullName || "";
+
+
+                document.getElementById(
+                    "email"
+                ).value =
+                    student.email || "";
+
+
+                document.getElementById(
+                    "phone"
+                ).value =
+                    student.phone || "";
+
+
+                document.getElementById(
+                    "className"
+                ).value =
+                    student.className || "";
+
+
+                document.getElementById(
+                    "modalTitle"
+                ).textContent =
+                    "Cập nhật sinh viên";
+
+
+                const modal = new bootstrap.Modal(
+                    document.getElementById(
+                        "studentModal"
+                    )
+                );
+
+
+                modal.show();
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+                alert(
+                    "Không thể lấy thông tin sinh viên!"
+                );
+
+            });
+
+    }
+
+
+    // ========================================================
+    // THÊM / CẬP NHẬT
+    // ========================================================
+
+    function saveStudent() {
+
+        const id =
+            document.getElementById(
+                "studentId"
+            ).value;
+
+
+        const student = {
+
+            studentCode:
+                document.getElementById(
+                    "studentCode"
+                ).value.trim(),
+
+            fullName:
+                document.getElementById(
+                    "fullName"
+                ).value.trim(),
+
+            email:
+                document.getElementById(
+                    "email"
+                ).value.trim(),
+
+            phone:
+                document.getElementById(
+                    "phone"
+                ).value.trim(),
+
+            className:
+                document.getElementById(
+                    "className"
+                ).value.trim()
+
+        };
+
+
+        if (
+            student.studentCode === ""
+            ||
+            student.fullName === ""
+            ||
+            student.email === ""
+        ) {
+
+            alert(
+                "Vui lòng nhập đầy đủ Mã SV, Họ tên và Email!"
+            );
+
+            return;
+
+        }
+
+
+        let url = API_URL;
+
+        let method = "POST";
+
+
+        if (id !== "") {
+
+            url =
+                API_URL + "/" + id;
+
+            method = "PUT";
+
+        }
+
+
+        fetch(url, {
+
+            method: method,
+
+            headers: {
+
+                "Content-Type":
+                    "application/json"
+
+            },
+
+            body:
+                JSON.stringify(student)
+
+        })
+
+            .then(response => {
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "HTTP " + response.status
+                    );
+
+                }
+
+                return response.json();
+
+            })
+
+            .then(() => {
+
+                const modalElement =
+                    document.getElementById(
+                        "studentModal"
+                    );
+
+
+                const modal =
+                    bootstrap.Modal.getInstance(
+                        modalElement
+                    );
+
+
+                modal.hide();
+
+
+                loadStudents();
+
+
+                alert(
+                    id === ""
+                        ? "Thêm sinh viên thành công!"
+                        : "Cập nhật sinh viên thành công!"
+                );
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+                alert(
+                    "Không thể lưu sinh viên!"
+                );
+
+            });
+
+    }
+
+
+    // ========================================================
+    // XÓA SINH VIÊN
+    // ========================================================
+
+    function deleteStudent(id) {
+
+        if (
+            !confirm(
+                "Bạn có chắc muốn xóa sinh viên này?"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        fetch(
+            API_URL + "/" + id,
+            {
+
+                method: "DELETE"
+
+            }
+
+        )
+
+            .then(response => {
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "HTTP " + response.status
+                    );
+
+                }
+
+            })
+
+            .then(() => {
+
+                loadStudents();
+
+                alert(
+                    "Xóa sinh viên thành công!"
+                );
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+                alert(
+                    "Không thể xóa sinh viên!"
+                );
+
+            });
+
+    }
+
+
+    // ========================================================
+    // THỐNG KÊ
+    // ========================================================
+
+    function updateStatistics(data) {
+
+        document.getElementById(
+            "totalStudents"
+        ).textContent =
+            data.length;
+
+
+        const classes =
+            new Set(
+                data
+                    .map(student => student.className)
+                    .filter(value => value)
+            );
+
+
+        document.getElementById(
+            "totalClasses"
+        ).textContent =
+            classes.size;
+
+
+        const emails =
+            data.filter(
+                student =>
+                    student.email
+                    &&
+                    student.email.trim() !== ""
+            );
+
+
+        document.getElementById(
+            "totalEmails"
+        ).textContent =
+            emails.length;
+
+    }
+
+
+    // ========================================================
+    // ESCAPE HTML
+    // ========================================================
+
+    function escapeHtml(value) {
+
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    // ========================================================
+    // ENTER ĐỂ TÌM KIẾM
+    // ========================================================
+
+    document.getElementById(
+        "keyword"
+    ).addEventListener(
+        "keypress",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                searchStudents();
+
+            }
+
+        }
+    );
+
+
+    // ========================================================
+    // LOAD KHI MỞ TRANG
+    // ========================================================
+
+    loadStudents();
+
+</script>
+
+
+</body>
+
+</html>
